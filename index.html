@@ -9,21 +9,46 @@
   <body>
     <main>
       <section class="ip__tracker">
-        <div class="background">
-          <img src="/pattern-bg-desktop.png" />
-        </div>
+        <picture class="background">
+          <source srcset="/pattern-bg-desktop.png" media="(min-width: 600px)" />
+          <img src="/pattern-bg-mobile.png" />
+        </picture>
         <div class="form">
           <h1>IP Address Tracker</h1>
           <form class="input">
             <input
+              id="input"
               type="text"
               placeholder="Search for any IP address or domain"
-            />
-            <button type="submit">
-              <img src="/icon-arrow.svg" alt="submit button" />
+            /><button class="submit" type="submit">
+              <img
+                class="submit__icon"
+                src="/icon-arrow.svg"
+                alt="submit button"
+              />
             </button>
           </form>
-          <ul id="result" class="result"></ul>
+          <ul id="result" class="result">
+            <li id="ip_address" class="result__item">
+              <h3 class="li_title">Ip Address</h3>
+              <h2 id="ip" class="li_text">192.212.174.101</h2>
+            </li>
+            <li class="line"></li>
+            <li class="result__item">
+              <h3 class="li_title">Location</h3>
+              <h2 id="location" class="li_text">Brooklyn, NY 10001</h2>
+            </li>
+            <li class="line"></li>
+            <li class="result__item">
+              <h3 class="li_title">Timezone</h3>
+              <h2 id="timezone" class="li_text">UTC -05:00</h2>
+            </li>
+            <li class="line"></li>
+            <li class="result__item">
+              <h3 class="li_title">ISP</h3>
+              <h2 id="isp" class="li_text">SpaceX Starlink</h2>
+            </li>
+          </ul>
         </div>
         <div id="map"></div>
       </section>

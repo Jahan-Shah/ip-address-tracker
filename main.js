@@ -1,42 +1,53 @@
+import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import './reset.css';
 import './style.css';
 
-import L from 'leaflet';
+import leaflet from 'leaflet';
 
-document.querySelector('#result').innerHTML = `
-<li id="ip_address" class="result__item">
-  <h3 class="li_title">Ip Address</h3>
-  <h2 class="li_text">192.212.174.101</h2>
-</li>
-<li class="line"></li>
-<li id="location" class="result__item">
-  <h3 class="li_title">Location</h3>
-  <h2 class="li_text">Brooklyn, NY 10001</h2>
-</li>
-<li class="line"></li>
-<li id="timezone" class="result__item">
-  <h3 class="li_title">Timezone</h3>
-  <h2 class="li_text">UTC - 05:00</h2>
-</li>
-<li class="line"></li>
-<li id="isp" class="result__item">
-  <h3 class="li_title">ISP</h3>
-  <h2 class="li_text">SpaceX Starlink</h2>
-</li>
-`
+const submit = document.querySelector('.input');
 
-// Create a map instance
-const map = L.map('map').setView([51.505, -0.09], 13);
+window.addEventListener('load', function () {
+  const input = document.querySelector('#input');
+  input.value = '';
+})
 
-const customIcon = L.icon({
+const response = async function (event) {
+  event.preventDefault();
+  try {
+    const input = document.querySelector('#input').value;
+    const res = await axios.get(`https://geo.ipify.org/api/v2/country,city?apiKey=${import.meta.env.VITE_API_KEY}&ipAddress=${input}`);
+    const data = res.data;
+
+    document.querySelector('#ip').textContent = data.ip;
+    document.querySelector('#location').textContent = `${data.location.city}, ${data.location.country} ${data.location.postalCode}`;
+    document.querySelector('#timezone').textContent = `UTC ${data.location.timezone}`;
+    document.querySelector('#isp').textContent = data.isp;
+
+    updateMap(data.location.lat, data.location.lng);
+  } catch (err) {
+    console.error(err, "API response failed");
+  }
+}
+
+submit.addEventListener('submit', response)
+
+
+const map = leaflet.map('map').setView([51.505, -0.09], 13);
+
+const customIcon = leaflet.icon({
   iconUrl: '/icon-location.svg',
-  iconAnchor: [12, 41],
+  iconAnchor: [22, 94]
 });
 
-// Add a tile layer to the map
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-// Add a marker to the map
-L.marker([51.5, -0.09], { icon: customIcon }).addTo(map);
+let marker = leaflet.marker([51.5, -0.09], { icon: customIcon }).addTo(map);
+
+const updateMap = (lat, lng) => {
+  map.setView([lat, lng], 13);
+  marker.setLatLng([lat, lng]);
+}
