@@ -13,30 +13,68 @@
 
 body {
   font-family: var(--ff);
+  overflow: hidden;
 }
 
 h1 {
   color: white;
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
 .ip__tracker {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .form {
-  top: 15%;
+  top: 6vw;
   position: absolute;
   z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.875rem;
+  place-self: center;
+}
+
+.input {
+  margin-bottom: 2.625rem;
+}
+
+form {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+input {
+  width: 497px;
+  height: 3.625rem;
+  border: none;
+  padding: 0 26px;
+}
+
+/* Firefox */
+input[type="number"] {
+  appearance: textfield;
+}
+
+button {
+  width: 3.625rem;
+  aspect-ratio: 1;
+  border: none;
+  background-color: black;
+}
+
+.submit__icon {
+  display: inline;
+  width: 10px;
 }
 
 .result {
   background-color: white;
   border-radius: 0.75rem;
-  padding: 32px;
+  padding: 3rem;
   display: flex;
   gap: 32px;
 }
@@ -54,8 +92,9 @@ li {
 }
 
 #map {
-  height: 180px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
 }
 
 .leaflet-control-attribution {
