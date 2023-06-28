@@ -17,7 +17,7 @@ const response = async function (event) {
   try {
     const input = document.querySelector('#input').value;
     const res = await axios.get(`/.netlify/functions/ipify?input=${input}`);
-    const data = await res.data;
+    const data = res.data;
 
     document.querySelector('#ip').textContent = data.ip;
     document.querySelector('#location').textContent = `${data.location.city}, ${data.location.country} ${data.location.postalCode}`;
