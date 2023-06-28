@@ -1,21 +1,20 @@
 import axios from "axios";
 
 export async function handler(event) {
+  const { input } = event.queryStringParameters;
+  const API = process.env.API_KEY
+  const url = `https://geo.ipify.org/api/v2/country,city?apiKey=${API}&ipAddress=${input}`
   try {
-    const { input } = JSON.parse(event.body);
-
-    const response = await axios.get(`https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.VITE_API_KEY}&ipAddress=${input}`);
-    const data = response.data;
-
+    const { data } = await axios.get(url);
     return {
       statusCode: 200,
-      body: JSON.stringify({ data })
+      body: JSON.stringify(data)
     };
   } catch (err) {
-    console.error(err);
+    const { status, statusText, headers, data } = err.response;
     return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'API response failed' })
+      status,
+      body: JSON.stringify({ status, statusText, headers, data })
     };
   }
 };
