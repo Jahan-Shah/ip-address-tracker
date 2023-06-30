@@ -14,9 +14,9 @@ window.addEventListener('load', function () {
 
 const response = async function (event) {
   event.preventDefault();
+  const input = document.querySelector('#input').value;
   try {
-    const input = document.querySelector('#input').value;
-    const res = await axios.get(`/.netlify/functions/ipify?input=${input}`);
+    const res = await axios.post('/.netlify/functions/ipify', { input });
     const data = res.data;
 
     document.querySelector('#ip').textContent = data.ip;
