@@ -52,6 +52,7 @@ input {
   height: 3.625rem;
   border: none;
   padding: 0 26px;
+  cursor: pointer;
 }
 
 /* Firefox */
@@ -64,6 +65,11 @@ button {
   aspect-ratio: 1;
   border: none;
   background-color: black;
+  cursor: pointer;
+}
+
+button:is(:hover, :focus) {
+  background-color: var(--clr-primary);
 }
 
 .submit__icon {
@@ -72,11 +78,12 @@ button {
 }
 
 .result {
+  margin: 0 5rem;
   background-color: white;
   border-radius: 0.75rem;
   padding: 3rem;
   display: flex;
-  gap: 32px;
+  gap: 2rem;
 }
 
 .li_title {
@@ -99,4 +106,54 @@ li {
 
 .leaflet-control-attribution {
   display: none;
+}
+
+@media (width < 940px) {
+  h3,
+  h2 {
+    font-size: 1.2rem;
+  }
+  .result {
+    margin: 0 10rem;
+  }
+}
+
+@media (width < 768px) {
+  h3,
+  h2 {
+    font-size: 1rem;
+  }
+  .result {
+    margin: 0 12rem;
+  }
+  input {
+    width: 447px;
+    height: 3.625rem;
+    border: none;
+    padding: 0 26px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (width < 640px) {
+  input {
+    width: 210px;
+    height: 3.625rem;
+    border: none;
+    padding: 0 26px;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  h3,
+  h2 {
+    font-size: 1.1rem;
+  }
+  .result {
+    flex-direction: column;
+    margin: 0 2rem;
+    gap: 1rem;
+  }
 }
